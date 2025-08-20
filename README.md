@@ -73,3 +73,33 @@ login using username and passwword guest
 docker stop consumer rabbitmq
 docker network rm rabbit-net
 ```
+
+
+
+## Running with wireshark
+
+
+Build and run rabbitmq dashboard
+```bash
+docker run -d --rm --network rabbit-net --name rabbitmq -p 15672:15672 -p 5672:5672 -p 3000:3000 rabbitmq:3-management
+```
+
+Build and run wireshark gui
+```bash
+docker run -d --name wireshark-gui --network container:rabbitmq --cap-add=NET_ADMIN --cap-add=NET_RAW lscr.io/linuxserver/wireshark:latest
+```
+
+Now you can go to localhost:15672 for the rabbitmq dashboard
+
+Go to localhost:3000 for the wireshark GUI
+
+Go to eth0
+
+In the wireshark we want to see only requests on port 5672
+Therefore in the top search type
+
+```bash
+tcp.port == 5672
+```
+
+And you will be able to see all the tcp/amqp requests
