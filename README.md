@@ -86,7 +86,7 @@ docker run -d --rm --network rabbit-net --name rabbitmq -p 15672:15672 -p 5672:5
 
 Build and run wireshark gui
 ```bash
-docker run -d --name wireshark-gui --network container:rabbitmq --cap-add=NET_ADMIN --cap-add=NET_RAW lscr.io/linuxserver/wireshark:latest
+docker run -d --rm --name wireshark-gui --network container:rabbitmq --cap-add=NET_ADMIN --cap-add=NET_RAW lscr.io/linuxserver/wireshark:latest
 ```
 
 Now you can go to localhost:15672 for the rabbitmq dashboard
