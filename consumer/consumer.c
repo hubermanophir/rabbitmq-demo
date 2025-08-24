@@ -37,19 +37,14 @@ int main() {
   }
 
   // Open channel AND check for errors
-  amqp_channel_open(conn, 1);
-  if (amqp_get_rpc_reply(conn).reply_type != AMQP_RESPONSE_NORMAL) {
-    fprintf(stderr, "Error: Failed to open channel\n");
-    return 1;
-  }
 
-  // Declare queue AND check for errors
+  amqp_channel_open(conn, 1);
+  amqp_get_rpc_reply(conn);
+
+  // Declare queue
   amqp_queue_declare(conn, 1, amqp_cstring_bytes(queue_name), 0, 0, 0, 0,
                      amqp_empty_table);
-  if (amqp_get_rpc_reply(conn).reply_type != AMQP_RESPONSE_NORMAL) {
-    fprintf(stderr, "Error: Failed to declare queue\n");
-    return 1;
-  }
+  amqp_get_rpc_reply(conn);
 
   // Start consuming messages AND check for errors
   amqp_basic_consume(conn, 1, amqp_cstring_bytes(queue_name), amqp_empty_bytes,
